@@ -12,7 +12,6 @@ const userSchema = new Schema({
     },
     password: {
         type: String,
-        unique: true,   // Ensure unique passwords (might not be necessary)
         required: true  // Password is required
     },
     user_roles: {
