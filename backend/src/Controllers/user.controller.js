@@ -3,7 +3,7 @@ const {ResponseFormat}  = require("../Services/responseFormat");
 const User = require("../Models/user.model");
 
 
-module.exports.createUser = async (request, response) => {
+module.exports.createUser = async (request, response) => {    
     try {
         // Create a new user instance based on the request body
         const newUser = await User.create(request.body);

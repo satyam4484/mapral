@@ -13,7 +13,7 @@ const mainRouter = require('./Routes/index');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.raw());
-app.use(bodyParser.text());
+// app.use(bodyParser.text());
 
 app.use('/uploads', express.static('uploads'));
 

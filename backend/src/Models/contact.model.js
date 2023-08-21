@@ -38,7 +38,7 @@ const educationSchema = new Schema({
     course_name: {
         type: String,
         required: true // Name of the course
-    },
+    },  
     percentage: {
         type: String,
         required: true // Percentage achieved
@@ -132,16 +132,16 @@ const contactSchema = new Schema({
         }
     ],
 
-    bank_account_no: {
-        type: String // Bank account number
-    },
-    bank_details: {
-        type: Schema.Types.ObjectId, // Reference to a document in the 'Documents' collection
-        ref: 'Documents'
+    bank_details:{
+        accountHolderName:String,
+        accountNumber:String,
+        bankName:String,
+        branchName:String,
+        ifscCode:String,
     },
     electricity_bill: {
-        type: Schema.Types.ObjectId, // Reference to a document in the 'Documents' collection
-        ref: 'Documents'
+        bill_no:String,
+        bill_photo:String
     },
     other_documents: [
         {

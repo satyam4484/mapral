@@ -1,0 +1,82 @@
+{
+    "name": "John Doe",
+    "profile_pic": "/path/to/profile-pic",
+    "contact_no": "123-456-7890",
+    "date_of_birth": "1990-01-15",
+    "current_address": "123 Main St, City",
+    "permanent_address": "456 Elm St, Town",
+    "aadhar": {
+      "aadhar_no": "1234 5678 9012",
+      "aadhar_photo": "/path/to/aadhar-photo"
+    },
+    "pancard": {
+      "pancard_no": "ABCDE1234F",
+      "pancard_photo": "/path/to/pancard-photo"
+    },
+    "pf": {
+      "pf_no": "PF1234567890",
+      "pf_photo": "/path/to/pf-photo"
+    },
+    "un_no": "UN123456",
+    "esic": {
+      "esic_no": "ESIC9876543",
+      "esic_photo": "/path/to/esic-photo"
+    },
+    "family_details": [
+      {
+        "name": "Jane Doe",
+        "relation": "Spouse",
+        "age": 28
+      },
+      {
+        "name": "Alice Doe",
+        "relation": "Child",
+        "age": 5
+      }
+    ],
+    "education_details": [
+      {
+        "college_name": "University A",
+        "course_name": "Computer Science",
+        "percentage": "85%"
+      },
+      {
+        "college_name": "University B",
+        "course_name": "Engineering",
+        "percentage": "90%"
+      }
+    ],
+    "experience": [
+      {
+        "organization_name": "Company X",
+        "job_title": "Software Developer",
+        "start_date": "2018-01-01",
+        "end_date": "2021-12-31"
+      },
+      {
+        "organization_name": "Company Y",
+        "job_title": "Marketing Manager",
+        "start_date": "2022-01-01",
+        "end_date": "2023-06-30"
+      }
+    ],
+    "bank_details": {
+      "account_no": "1234567890",
+      "bank_proof": "/path/to/bank-proof"
+    },
+    "electricity_bill": {
+      "bill_no": "EB123456",
+      "bill_photo": "/path/to/bill-photo"
+    },
+    "other_documents": [
+      {
+        "filename": "Document 1",
+        "path": "/path/to/document1"
+      },
+      {
+        "filename": "Document 2",
+        "path": "/path/to/document2"
+      }
+    ]
+  }
+  
