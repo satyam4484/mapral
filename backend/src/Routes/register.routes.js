@@ -13,9 +13,10 @@ const resumeStorage = multer({ storage: createStorage("uploads/register/") });
 
 // Define routes and their associated controllers
 // POST route to register a user with resume
-router.route('/register').post(resumeStorage.any(), controller.userRegister);
+router.route('/').post(resumeStorage.any(), controller.userRegister);
 
 // POST route to set the status of a registered user
-router.route('/register/status').post(controller.setRegisterStatus);
+router.route('/status').post(controller.setRegisterStatus);
 
+router.route('/get',controller.getvalue);
 module.exports = router;

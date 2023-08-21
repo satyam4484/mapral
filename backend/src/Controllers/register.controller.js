@@ -4,9 +4,10 @@ const { ResponseFormat } = require("../Services/responseFormat");
 // Register a user with their resume
 module.exports.userRegister = async (request, response) => {
     try {
+        const newpath = request.files[0].destination +request.files[0].filename;
         const register = await Register.create({
             ...request.body, // User details from request body
-            resume: request.resumePath // Attach resume path from the request
+            resume: newpath// Attach resume path from the request
         });
         await register.save();
         response.status(201).send(ResponseFormat(false, "User Registered Successfully", register));

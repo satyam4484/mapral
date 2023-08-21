@@ -9,7 +9,8 @@ const employeeCategorySchema = new Schema({
     },
     category_name: {
         type: String,
-        required: true
+        required: true,
+        unique:true
     }
 });
 

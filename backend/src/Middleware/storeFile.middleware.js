@@ -1,11 +1,23 @@
 const multer = require('multer');
-const path = require("path");
+const path = require('path');
+const fs = require('fs');
 
 // This function creates Multer disk storage with customized filename
 function createStorage(destinationFolder) {
+    // Middleware to create upload folder if it doesn't exist
+    const createUploadFolderMiddleware = (req, res, next) => {
+        if (!fs.existsSync(destinationFolder)) {
+            fs.mkdirSync(destinationFolder, { recursive: true });
+        }
+        next();
+    };
+
     const storage = multer.diskStorage({
         destination: (req, file, cb) => {
-            cb(null, destinationFolder); // Set the destination folder for uploaded files
+            // Call the createUploadFolderMiddleware before setting the destination
+            createUploadFolderMiddleware(req, null, () => {
+                cb(null, destinationFolder); // Set the destination folder for uploaded files
+            });
         },
         filename: (req, file, cb) => {
             const currentdate = new Date();
@@ -14,10 +26,6 @@ function createStorage(destinationFolder) {
             const fileFormat = file.originalname.split('.').pop(); // Get the file format (extension)
             const newFilename = `${file.originalname}_${datetime}.${fileFormat}`; // Create a new filename with date and time
             cb(null, newFilename); // Set the new filename for the uploaded file
-
-            // Construct and store the full path of the uploaded file in the request object
-            const fullPath = path.join(destinationFolder, newFilename);
-            req.resumePath = fullPath;
         }
     });
 
