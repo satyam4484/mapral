@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const middleWare = require("../Middleware/contact.middleware");
 
 // Define the schema for individual documents
 const documentSchema = new Schema({
@@ -38,7 +39,7 @@ const educationSchema = new Schema({
     course_name: {
         type: String,
         required: true // Name of the course
-    },  
+    },
     percentage: {
         type: String,
         required: true // Percentage achieved
@@ -132,16 +133,17 @@ const contactSchema = new Schema({
         }
     ],
 
-    bank_details:{
-        accountHolderName:String,
-        accountNumber:String,
-        bankName:String,
-        branchName:String,
-        ifscCode:String,
+    bank_details: {
+        accountHolderName: String,
+        accountNumber: String,
+        bankName: String,
+        branchName: String,
+        ifscCode: String,
+        bank_proof: String
     },
     electricity_bill: {
-        bill_no:String,
-        bill_photo:String
+        bill_no: String,
+        bill_photo: String
     },
     other_documents: [
         {
@@ -150,11 +152,50 @@ const contactSchema = new Schema({
         }
     ]
 });
+const Experience = model("Experience", experienceSchema);
+const Education = model("Education", educationSchema);
+const FamilyDetail = model("FamilyDetail", familyDetailSchema);
+
+documentSchema.pre("deleteOne",{ query: true, document: false },async function(next) {
+    const document =await Documents.findOne({ _id: this.getQuery()._id });
+    await middleWare.deleteDocumentCascades(document,next);
+    next();
+});
+
+contactSchema.pre("deleteOne", { query: true, document: false }, async function (next) {
+    const contact = await Contact.findOne({ _id: this.getQuery()._id });
+
+    // delete related documents
+    if (contact?.other_documents) {
+        for (const item of contact.other_documents) {
+            console.log(item);
+            await Documents.deleteOne({ _id: item});
+        }
+    }
+    // Experience.deleteMany({_id:{$in:contact.experience}});
+    // Education.deleteMany({_id:{$in:contact.education_details}});
+    // FamilyDetail.deleteMany({_id:{$in:contact.education_details}});
+    // delete related Experience
+    if (contact?.experience) {
+        for (const item of contact.experience) {
+            console.log(item);
+            await Experience.deleteOne({ _id: item});
+        }
+    }
+    if(contact?.education_details){
+        for(const item of contact.education_details){
+            await Education.deleteOne({_id:item});
+        }
+    }
+    if(contact?.family_details) {
+        for(const item of contact.family_details) {
+            await FamilyDetail.deleteOne({_id:item});
+        }
+    }
+    await middleWare.deleteContactCascades(contact, next);
+    next();
+})
 
 const Documents = model("Document", documentSchema);
 const Contact = model("Contact", contactSchema);
-const Experience = model("Experience",experienceSchema);
-const Education = model("Education",educationSchema);
-const FamilyDetail = model("FamilyDetail",familyDetailSchema)
-
-module.exports = { Contact, Documents,Experience,Education,FamilyDetail };
+module.exports = { Contact, Documents, Experience, Education, FamilyDetail };

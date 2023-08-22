@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const middleware = require("../Middleware/employee.middleware");
 
 // Define the schema for Employee Categories
 const employeeCategorySchema = new Schema({
@@ -32,6 +33,7 @@ const employeeSchema = new Schema({
         required: true
     }
 });
+
 
 // Create models for Employee Category and Employee
 const EmployeeCategory = model("EmployeeCategory", employeeCategorySchema);
