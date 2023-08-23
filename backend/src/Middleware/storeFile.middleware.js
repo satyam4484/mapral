@@ -2,9 +2,9 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-// This function creates Multer disk storage with customized filename
+// This function creates Multer disk storage with a customized filename
 function createStorage(destinationFolder) {
-    // Middleware to create upload folder if it doesn't exist
+    // Middleware to create the upload folder if it doesn't exist
     const createUploadFolderMiddleware = (req, res, next) => {
         if (!fs.existsSync(destinationFolder)) {
             fs.mkdirSync(destinationFolder, { recursive: true });

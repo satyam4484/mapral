@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const {Contact} = require("../Models/contact.model");
 const middleware = require("../Middleware/employee.middleware");
 
 // Define the schema for Employee Categories
@@ -33,6 +34,12 @@ const employeeSchema = new Schema({
         required: true
     }
 });
+
+employeeSchema.pre("deleteOne", { query: true, document: false }, async function (next) {
+    const employee= await Employee.findOne({ _id: this.getQuery()._id });
+    await Contact.deleteOne({_id:employee.contact});
+    next();
+})
 
 
 // Create models for Employee Category and Employee

@@ -165,17 +165,12 @@ documentSchema.pre("deleteOne",{ query: true, document: false },async function(n
 contactSchema.pre("deleteOne", { query: true, document: false }, async function (next) {
     const contact = await Contact.findOne({ _id: this.getQuery()._id });
 
-    // delete related documents
     if (contact?.other_documents) {
         for (const item of contact.other_documents) {
             console.log(item);
             await Documents.deleteOne({ _id: item});
         }
     }
-    // Experience.deleteMany({_id:{$in:contact.experience}});
-    // Education.deleteMany({_id:{$in:contact.education_details}});
-    // FamilyDetail.deleteMany({_id:{$in:contact.education_details}});
-    // delete related Experience
     if (contact?.experience) {
         for (const item of contact.experience) {
             console.log(item);

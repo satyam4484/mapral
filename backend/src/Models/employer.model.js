@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const {Contact} = require("../Models/contact.model");
 
 // Define the schema for Employers
 const employerSchema = new Schema({
@@ -18,6 +19,13 @@ const employerSchema = new Schema({
         required: true
     }
 });
+
+
+employerSchema.pre("deleteOne", { query: true, document: false }, async function (next) {
+    const employer = await Employer.findOne({ _id: this.getQuery()._id });
+    await Contact.deleteOne({_id:employer.contact});
+    next();
+})
 
 // Create the Employer model based on the employerSchema
 const Employer = model("Employer", employerSchema);

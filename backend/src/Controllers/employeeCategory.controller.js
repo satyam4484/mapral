@@ -1,5 +1,5 @@
-const {EmployeeCategory} = require("../Models/employee.model");
-const {ResponseFormat} = require('../Services/responseFormat'); // Update the path accordingly
+const { EmployeeCategory } = require("../Models/employee.model");
+const { ResponseFormat } = require('../Services/responseFormat'); // Update the path accordingly
 
 // Create a new employee category
 exports.createEmployeeCategory = async (request, response) => {
@@ -18,8 +18,8 @@ exports.updateEmployeeCategory = async (request, response) => {
         const { id } = request.params;
         const updatedCategory = await EmployeeCategory.findByIdAndUpdate(
             id,
-           {...request.body},
-           {new:true}
+            { ...request.body },
+            { new: true } // Return the updated document after update
         );
         if (!updatedCategory) {
             throw 'Employee category not found';
@@ -36,7 +36,8 @@ exports.deleteEmployeeCategory = async (request, response) => {
         const { id } = request.params;
         const deletedCategory = await EmployeeCategory.findByIdAndDelete(id);
         if (!deletedCategory) {
-            'Employee category not found';
+            response.send(ResponseFormat(true, 'Employee category not found'));
+            return;
         }
         response.send(ResponseFormat(false, 'Employee category deleted'));
     } catch (error) {
